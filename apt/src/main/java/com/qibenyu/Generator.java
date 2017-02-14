@@ -6,7 +6,7 @@ import java.util.List;
 import javax.lang.model.element.TypeElement;
 
 
-public class ProxyInfo {
+public class Generator {
     private String packageName;
     private String targetClassName;
     private String proxyClassName;
@@ -16,7 +16,7 @@ public class ProxyInfo {
 
     public static final String PROXY = "Action";
 
-    ProxyInfo(String packageName, String className) {
+    Generator(String packageName, String className) {
         this.packageName = packageName;
         this.targetClassName = className;
         this.proxyClassName = className + "$$" + PROXY;

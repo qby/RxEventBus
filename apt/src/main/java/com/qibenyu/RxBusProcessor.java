@@ -49,17 +49,17 @@ public class RxBusProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        Map<String, ProxyInfo> proxyMap = getProxyMap(roundEnv);
+        Map<String, Generator> proxyMap = getProxyMap(roundEnv);
 
         for (String key : proxyMap.keySet()) {
-            ProxyInfo proxyInfo = proxyMap.get(key);
-            writeCode(proxyInfo);
+            Generator generator = proxyMap.get(key);
+            writeCode(generator);
         }
         return true;
     }
 
-    private Map<String, ProxyInfo> getProxyMap(RoundEnvironment roundEnv) {
-        Map<String, ProxyInfo> proxyMap = new HashMap<>();
+    private Map<String, Generator> getProxyMap(RoundEnvironment roundEnv) {
+        Map<String, Generator> proxyMap = new HashMap<>();
         for (Element element : roundEnv.getElementsAnnotatedWith(OnReceivedRxEvent.class)) {
 
             ExecutableElement executableElement = (ExecutableElement) element;
@@ -82,14 +82,14 @@ public class RxBusProcessor extends AbstractProcessor {
 
             EventMethod method = new EventMethod(methodName, getMethodParameterTypes(executableElement));
 
-            ProxyInfo proxyInfo = proxyMap.get(fullClassName);
-            if (proxyInfo != null) {
-                proxyInfo.addMethod(method);
+            Generator generator = proxyMap.get(fullClassName);
+            if (generator != null) {
+                generator.addMethod(method);
             } else {
-                proxyInfo = new ProxyInfo(packageName, className);
-                proxyInfo.setTypeElement(classElement);
-                proxyInfo.addMethod(method);
-                proxyMap.put(fullClassName, proxyInfo);
+                generator = new Generator(packageName, className);
+                generator.setTypeElement(classElement);
+                generator.addMethod(method);
+                proxyMap.put(fullClassName, generator);
             }
         }
         return proxyMap;
@@ -112,23 +112,23 @@ public class RxBusProcessor extends AbstractProcessor {
         return value.toString();
     }
 
-    private void writeCode(ProxyInfo proxyInfo) {
+    private void writeCode(Generator generator) {
         try {
             JavaFileObject jfo = processingEnv.getFiler().createSourceFile(
-                    proxyInfo.getProxyClassFullName(),
-                    proxyInfo.getTypeElement());
+                    generator.getProxyClassFullName(),
+                    generator.getTypeElement());
             Writer writer = jfo.openWriter();
-            writer.write(proxyInfo.generateJavaCode());
+            writer.write(generator.generateJavaCode());
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            error(proxyInfo.getTypeElement(),
+            error(generator.getTypeElement(),
                     "Unable to write injector for type %s: %s",
-                    proxyInfo.getTypeElement(), e.getMessage());
+                    generator.getTypeElement(), e.getMessage());
         } catch (Exception e) {
-            error(proxyInfo.getTypeElement(),
+            error(generator.getTypeElement(),
                     "Unable to write injector for type %s: %s",
-                    proxyInfo.getTypeElement(), e.getMessage());
+                    generator.getTypeElement(), e.getMessage());
         }
     }
 

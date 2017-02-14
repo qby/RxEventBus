@@ -4,7 +4,6 @@ package com.qibenyu.rxbus;
 import android.util.Log;
 
 import com.qibenyu.AbstractRegister;
-import com.qibenyu.Event;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
