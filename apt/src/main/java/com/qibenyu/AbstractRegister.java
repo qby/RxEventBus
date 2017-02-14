@@ -6,7 +6,9 @@ package com.qibenyu;
 
 public interface AbstractRegister<T> {
 
-    void register(Object object);
+    void init();
 
-    void unregister(Event event);
+    void register(Object subscribe);
+
+    void unregister(Object subscribe);
 }

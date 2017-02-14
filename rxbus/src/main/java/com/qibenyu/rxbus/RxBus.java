@@ -46,7 +46,7 @@ public class RxBus {
         register.register(subscribe);
     }
 
-    public void unregister(Event subscribe) {
+    public void unregister(Object subscribe) {
         AbstractRegister<Object> register = findRegister(subscribe);
         register.unregister(subscribe);
     }
@@ -62,6 +62,7 @@ public class RxBus {
                         + "Action");
                 injector = (AbstractRegister<Object>) injectorClazz
                         .newInstance();
+                injector.init();
                 REGISTERS.put(clazz, injector);
             } catch (Exception e) {
                 e.printStackTrace();
