@@ -1,5 +1,7 @@
 package com.qibenyu.rxeventbus;
 
+import com.qibenyu.rxbus.RxBus;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -21,5 +23,6 @@ public class OrderEvent {
         this.orderAction = orderAction;
 
         EventBus.getDefault().post(new AccountEvent(AccountEvent.LOGIN));
+        RxBus.getInstance().post(new AccountEvent(AccountEvent.LOGIN));
     }
 }

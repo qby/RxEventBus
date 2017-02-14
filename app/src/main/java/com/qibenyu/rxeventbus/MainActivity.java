@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        new OrderEvent("");
     }
 
     @OnReceivedRxEvent(AccountEvent.class)
@@ -46,6 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-        RxBus.getInstance().unregister(AccountEvent.class);
+        RxBus.getInstance().unregister(this);
     }
 }

@@ -1,6 +1,8 @@
 package com.qibenyu.rxbus;
 
 
+import android.util.Log;
+
 import com.qibenyu.AbstractRegister;
 import com.qibenyu.Event;
 
@@ -17,6 +19,8 @@ import rx.subjects.Subject;
  */
 
 public class RxBus {
+
+    private static final String TAG = "RxBus";
 
     private final Subject<Object, Object> _bus;
 
@@ -43,11 +47,13 @@ public class RxBus {
 
     public void register(Object subscribe) {
         AbstractRegister<Object> register = findRegister(subscribe);
+        register.init();
         register.register(subscribe);
     }
 
     public void unregister(Object subscribe) {
         AbstractRegister<Object> register = findRegister(subscribe);
+        Log.d(TAG, "unregister: " + register);
         register.unregister(subscribe);
     }
 
@@ -62,7 +68,7 @@ public class RxBus {
                         + "Action");
                 injector = (AbstractRegister<Object>) injectorClazz
                         .newInstance();
-                injector.init();
+                Log.d(TAG, "findRegister: className = " + clazz.getName() + ", injector = " + injector);
                 REGISTERS.put(clazz, injector);
             } catch (Exception e) {
                 e.printStackTrace();

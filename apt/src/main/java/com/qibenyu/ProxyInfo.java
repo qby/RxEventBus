@@ -34,11 +34,13 @@ public class ProxyInfo {
                 .append("import com.qibenyu.AbstractRegister;\n")
                 .append("import rx.subscriptions.CompositeSubscription;\n")
                 .append("import rx.Subscriber;\n")
+                .append("import rx.Subscription;\n")
                 .append("import com.qibenyu.rxbus.RxBus;\n")
                 .append("public class ").append(proxyClassName)
                 .append(" implements AbstractRegister")
                 .append(" {\n")
-                .append("   private CompositeSubscription mSubscriptions;\n");
+                .append("   private CompositeSubscription mSubscriptions;\n")
+                .append("   private Subscription subscription;");
 
 
         generateInit(builder);
@@ -61,7 +63,7 @@ public class ProxyInfo {
                 .append("   public void register(final Object obj)").append(" {\n")
                 .append("");
         for (EventMethod method : getMethods()) {
-            builder.append("       RxBus.getInstance()\n")
+            builder.append("       subscription = RxBus.getInstance()\n")
                     .append("           .toObserverable(").append(method.getParameterType()).append(".class)\n")
                     .append("           .subscribe(new Subscriber<"+ method.getParameterType() +">() {\n")
                     .append("               @Override\n")
@@ -72,7 +74,8 @@ public class ProxyInfo {
                     .append("               public void onNext("+ method.getParameterType() +" event) {\n")
                     .append("                   ((" + targetClassName + ")obj)." + method.getMethodName()+"(event);\n")
                     .append("               }\n")
-                    .append("      });\n");
+                    .append("      });\n")
+                    .append("       mSubscriptions.add(subscription);\n");
         }
         builder.append("   }\n");
     }
