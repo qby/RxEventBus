@@ -4,9 +4,6 @@ import com.qibenyu.rxbus.RxBus;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * Created by lenovo on 2017/2/1.
- */
 
 public class OrderEvent {
 

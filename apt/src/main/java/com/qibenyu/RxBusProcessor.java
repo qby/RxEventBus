@@ -24,9 +24,6 @@ import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
-/**
- * Created by lenovo on 2017/1/27.
- */
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class RxBusProcessor extends AbstractProcessor {
 

@@ -6,9 +6,6 @@ import com.qibenyu.rxbus.RxBus;
 
 import rx.Subscriber;
 
-/**
- * Created by lenovo on 2017/1/31.
- */
 
 public class RxSendAction {
 

@@ -7,9 +7,6 @@ import android.util.Log;
 
 import com.qibenyu.OnReceivedRxEvent;
 
-/**
- * Created by qibenyu on 17-2-14.
- */
 
 public class SecondActivity extends AppCompatActivity {
 

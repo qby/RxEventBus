@@ -13,10 +13,6 @@ import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
-/**
- * Created by lenovo on 2017/1/27.
- */
-
 public class RxBus {
 
     private static final String TAG = "RxBus";
