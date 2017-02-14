@@ -25,7 +25,6 @@ public class SecondActivity extends AppCompatActivity {
         super.onStart();
     }
 
-
     @OnReceivedRxEvent(OrderEvent.class)
     public void onOrderEvent(OrderEvent event) {
         Log.d(TAG, "onOrderEvent: ");
