@@ -4,6 +4,8 @@
 ### 使用编译时注解和RxBus结合,实现EventBus功能
 
 
+
+```
 public abstract class EventListener<T> {
 
     private static final String TAG = "EventListener";
@@ -41,3 +43,4 @@ public abstract class EventListener<T> {
     public abstract void onEventTriggr(T event);
 
 } 
+```
